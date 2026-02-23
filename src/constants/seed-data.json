@@ -1,0 +1,383 @@
+{
+  "donors": [
+    {
+      "id": "donor_1",
+      "name": "UNICEF Philippines",
+      "type": "International NGO",
+      "location": "Makati City",
+      "email": "surplus@unicef.ph",
+      "logo": "🇺🇳"
+    },
+    {
+      "id": "donor_2",
+      "name": "ADB (Asian Development Bank)",
+      "type": "Multilateral Organization",
+      "location": "Mandaluyong City",
+      "email": "donations@adb.org",
+      "logo": "🏦"
+    },
+    {
+      "id": "donor_3",
+      "name": "World Vision Philippines",
+      "type": "International NGO",
+      "location": "Quezon City",
+      "email": "surplus@worldvision.ph",
+      "logo": "🌍"
+    },
+    {
+      "id": "donor_4",
+      "name": "Save the Children PH",
+      "type": "International NGO",
+      "location": "Makati City",
+      "email": "resources@savethechildren.ph",
+      "logo": "👶"
+    },
+    {
+      "id": "donor_5",
+      "name": "JICA Philippines",
+      "type": "Government Aid Agency",
+      "location": "Makati City",
+      "email": "surplus@jica.ph",
+      "logo": "🇯🇵"
+    },
+    {
+      "id": "donor_6",
+      "name": "Ayala Foundation",
+      "type": "Corporate Foundation",
+      "location": "Makati City",
+      "email": "csr@ayalafoundation.org",
+      "logo": "🏢"
+    },
+    {
+      "id": "donor_7",
+      "name": "UNDP Philippines",
+      "type": "International NGO",
+      "location": "Makati City",
+      "email": "assets@undp.ph",
+      "logo": "🇺🇳"
+    },
+    {
+      "id": "donor_8",
+      "name": "Philippine Red Cross",
+      "type": "Humanitarian Org",
+      "location": "Mandaluyong City",
+      "email": "surplus@redcross.ph",
+      "logo": "🏥"
+    }
+  ],
+
+  "receivers": [
+    {
+      "id": "recv_1",
+      "name": "Bahay Tuluyan",
+      "type": "Shelter for Street Children",
+      "location": "Manila",
+      "needs": ["laptops", "desks", "chairs"],
+      "email": "info@bahaytuluyan.org"
+    },
+    {
+      "id": "recv_2",
+      "name": "Stairway Foundation",
+      "type": "Children's Education",
+      "location": "Puerto Galera, Mindoro",
+      "needs": ["textbooks", "computers", "shelves"],
+      "email": "info@stairwayfoundation.org"
+    },
+    {
+      "id": "recv_3",
+      "name": "Tuloy Foundation",
+      "type": "Home for Street Youth",
+      "location": "Alabang, Muntinlupa",
+      "needs": ["desks", "whiteboards", "tablets"],
+      "email": "info@tuloyfoundation.org"
+    },
+    {
+      "id": "recv_4",
+      "name": "Virlanie Foundation",
+      "type": "Orphanage & Education",
+      "location": "Manila",
+      "needs": ["laptops", "chairs", "projectors"],
+      "email": "info@virlanie.org"
+    },
+    {
+      "id": "recv_5",
+      "name": "Gawad Kalinga",
+      "type": "Community Development",
+      "location": "Quezon City",
+      "needs": ["furniture", "tech equipment"],
+      "email": "info@gk1world.com"
+    },
+    {
+      "id": "recv_6",
+      "name": "Cartwheel Foundation",
+      "type": "Indigenous Education",
+      "location": "Mindanao",
+      "needs": ["textbooks", "tablets", "desks"],
+      "email": "info@cartwheel.ph"
+    },
+    {
+      "id": "recv_7",
+      "name": "Yellow Boat of Hope",
+      "type": "Island School Access",
+      "location": "Zamboanga",
+      "needs": ["chairs", "bookshelves", "laptops"],
+      "email": "info@yellowboatofhope.org"
+    },
+    {
+      "id": "recv_8",
+      "name": "Aklat, Pair, Saya (APS)",
+      "type": "Library Building",
+      "location": "Nationwide",
+      "needs": ["bookshelves", "desks", "computers"],
+      "email": "info@apsfilipinas.org"
+    },
+    {
+      "id": "recv_9",
+      "name": "ICM (International Care Ministries)",
+      "type": "Ultra-Poor Communities",
+      "location": "Visayas & Mindanao",
+      "needs": ["chairs", "tables", "basic tech"],
+      "email": "info@caremin.com"
+    },
+    {
+      "id": "recv_10",
+      "name": "Krus na Ligas Community Learning Center",
+      "type": "Public Community School",
+      "location": "Quezon City",
+      "needs": ["whiteboards", "desks", "laptops"],
+      "email": "info@knlclc.ph"
+    }
+  ],
+
+  "items": [
+    {
+      "id": "item_1",
+      "donor_id": "donor_1",
+      "title": "5 Dell Latitude Laptops",
+      "description": "Refurbished, 8GB RAM, 256GB SSD. Used for field office operations. Wiped and ready for classroom use.",
+      "category": "tech",
+      "quantity": 5,
+      "condition": "Good",
+      "urgent": true,
+      "urgent_note": "Office clearing — pickup within 24 hrs",
+      "photo": "laptop.jpg",
+      "posted_at": "2026-02-23T08:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 5,
+        "estimated_value": 25000,
+        "currency": "PHP",
+        "impact_statement": "Could support 5 students in digital literacy programs for one full school year."
+      }
+    },
+    {
+      "id": "item_2",
+      "donor_id": "donor_2",
+      "title": "20 Ergonomic Office Chairs",
+      "description": "Mesh back office chairs from ADB headquarters renovation. Minor wear, fully functional.",
+      "category": "furniture",
+      "quantity": 20,
+      "condition": "Good",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "chairs.jpg",
+      "posted_at": "2026-02-22T14:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 8,
+        "sdg_name": "Decent Work & Economic Growth",
+        "people_helped": 20,
+        "estimated_value": 40000,
+        "currency": "PHP",
+        "impact_statement": "Could furnish a community vocational training center, supporting 20 trainees in skills development."
+      }
+    },
+    {
+      "id": "item_3",
+      "donor_id": "donor_3",
+      "title": "10 Samsung Galaxy Tablets",
+      "description": "Used for community health worker program. Factory reset, with chargers. Android 12.",
+      "category": "tech",
+      "quantity": 10,
+      "condition": "Fair",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "tablets.jpg",
+      "posted_at": "2026-02-22T10:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 10,
+        "estimated_value": 50000,
+        "currency": "PHP",
+        "impact_statement": "Could enable 10 students in remote areas to access digital learning materials for one semester."
+      }
+    },
+    {
+      "id": "item_4",
+      "donor_id": "donor_4",
+      "title": "15 Folding Tables (6ft)",
+      "description": "Heavy-duty folding tables from disaster response operations. Ideal for classrooms or feeding programs.",
+      "category": "furniture",
+      "quantity": 15,
+      "condition": "Good",
+      "urgent": true,
+      "urgent_note": "Warehouse clearing this week — must go by Friday",
+      "photo": "tables.jpg",
+      "posted_at": "2026-02-23T06:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 11,
+        "sdg_name": "Sustainable Cities & Communities",
+        "people_helped": 60,
+        "estimated_value": 30000,
+        "currency": "PHP",
+        "impact_statement": "Could equip a community feeding center, serving up to 60 children daily."
+      }
+    },
+    {
+      "id": "item_5",
+      "donor_id": "donor_5",
+      "title": "3 Epson Projectors",
+      "description": "Used for JICA training seminars. 2500 lumens, with HDMI cables. Lamp life ~70% remaining.",
+      "category": "tech",
+      "quantity": 3,
+      "condition": "Good",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "projector.jpg",
+      "posted_at": "2026-02-21T16:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 90,
+        "estimated_value": 45000,
+        "currency": "PHP",
+        "impact_statement": "Could serve 3 classrooms of 30 students each, enabling visual-based learning for a full year."
+      }
+    },
+    {
+      "id": "item_6",
+      "donor_id": "donor_6",
+      "title": "8 Standing Whiteboards",
+      "description": "Mobile whiteboards with rollers from Ayala Foundation training center upgrade. Includes markers and erasers.",
+      "category": "furniture",
+      "quantity": 8,
+      "condition": "Excellent",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "whiteboard.jpg",
+      "posted_at": "2026-02-21T09:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 240,
+        "estimated_value": 32000,
+        "currency": "PHP",
+        "impact_statement": "Could equip 8 classrooms across multiple schools, improving learning for up to 240 students."
+      }
+    },
+    {
+      "id": "item_7",
+      "donor_id": "donor_7",
+      "title": "12 HP Printers (LaserJet)",
+      "description": "Black & white laser printers from UNDP office consolidation. Includes partial toner cartridges.",
+      "category": "tech",
+      "quantity": 12,
+      "condition": "Fair",
+      "urgent": true,
+      "urgent_note": "Office move — pickup by Wednesday",
+      "photo": "printer.jpg",
+      "posted_at": "2026-02-23T07:30:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 17,
+        "sdg_name": "Partnerships for the Goals",
+        "people_helped": 12,
+        "estimated_value": 60000,
+        "currency": "PHP",
+        "impact_statement": "Could empower 12 grassroots organizations with printing capability for reports, certificates, and educational materials."
+      }
+    },
+    {
+      "id": "item_8",
+      "donor_id": "donor_8",
+      "title": "30 Stackable Plastic Chairs",
+      "description": "From Philippine Red Cross disaster preparedness training events. Durable, weather-resistant, indoor/outdoor.",
+      "category": "furniture",
+      "quantity": 30,
+      "condition": "Good",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "plastic-chairs.jpg",
+      "posted_at": "2026-02-20T11:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 11,
+        "sdg_name": "Sustainable Cities & Communities",
+        "people_helped": 30,
+        "estimated_value": 15000,
+        "currency": "PHP",
+        "impact_statement": "Could furnish a community learning center or barangay hall, seating 30 participants for training programs."
+      }
+    },
+    {
+      "id": "item_9",
+      "donor_id": "donor_6",
+      "title": "6 Wooden Bookshelves",
+      "description": "Solid wood bookshelves from Ayala Foundation library renovation. 5-shelf, 180cm tall.",
+      "category": "furniture",
+      "quantity": 6,
+      "condition": "Excellent",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "bookshelf.jpg",
+      "posted_at": "2026-02-20T08:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 150,
+        "estimated_value": 18000,
+        "currency": "PHP",
+        "impact_statement": "Could establish a reading corner or mini-library serving up to 150 students in an underserved school."
+      }
+    },
+    {
+      "id": "item_10",
+      "donor_id": "donor_1",
+      "title": "4 Complete Desktop PCs",
+      "description": "UNICEF office surplus. Intel i5, 8GB RAM, 500GB HDD. Monitors, keyboards, and mice included.",
+      "category": "tech",
+      "quantity": 4,
+      "condition": "Good",
+      "urgent": false,
+      "urgent_note": null,
+      "photo": "desktop.jpg",
+      "posted_at": "2026-02-19T13:00:00Z",
+      "status": "available",
+      "ai_impact": {
+        "sdg": 4,
+        "sdg_name": "Quality Education",
+        "people_helped": 40,
+        "estimated_value": 40000,
+        "currency": "PHP",
+        "impact_statement": "Could set up a small computer lab, enabling 40 students to develop digital skills per semester."
+      }
+    }
+  ],
+
+  "impact_totals": {
+    "total_value_saved_php": 355000,
+    "total_items_donated": 113,
+    "total_items_claimed": 89,
+    "total_orgs_connected": 18,
+    "total_people_helped": 657,
+    "waste_diverted_kg": 1200
+  }
+}
