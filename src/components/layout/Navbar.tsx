@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
@@ -14,7 +15,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" className="text-xl font-bold tracking-tight text-emerald-700">
-          ResourceCycle
+          <img src={logo} alt="Logo" className="h-16 w-32" />
         </Link>
 
         <div className="flex gap-1">
