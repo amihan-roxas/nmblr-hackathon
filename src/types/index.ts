@@ -50,10 +50,13 @@ export interface DonateFormData {
 }
 
 export interface DashboardStats {
-  totalItems: number;
+  totalDonations: number;
+  totalQuantity: number;
   totalClaimed: number;
   totalAvailable: number;
   totalUrgent: number;
-  byCategory: Record<Category, number>;
-  bySdg: { goal: SdgGoal; count: number }[];
+  totalPeopleHelped: number;
+  totalEstimatedValue: number;
+  byCategory: Record<Category, { donations: number; quantity: number }>;
+  bySdg: { goal: SdgGoal; count: number; peopleHelped: number }[];
 }

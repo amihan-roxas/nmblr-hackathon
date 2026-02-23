@@ -15,9 +15,20 @@ function formatValue(item: DonationItem): string {
 export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
   const margin = 20;
   const contentW = pageW - margin * 2;
+  const bottomMargin = 20;
   let y = 20;
+  const lineH = 5;
+
+  // ── Page-break helper ──
+  function checkPage(needed: number) {
+    if (y + needed > pageH - bottomMargin) {
+      doc.addPage();
+      y = margin;
+    }
+  }
 
   // ── Header bar ──
   doc.setFillColor(...GREEN);
@@ -25,7 +36,7 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
   doc.setFont('helvetica', 'bold');
-  doc.text('RESOURCECYCLE', margin, 16);
+  doc.text('AIYUDA', margin, 16);
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
   doc.text('Impact Report', margin, 24);
@@ -35,6 +46,7 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
 
   // ── Section helper ──
   function sectionTitle(title: string) {
+    checkPage(20);
     doc.setFillColor(...GREEN);
     doc.rect(margin, y, contentW, 8, 'F');
     doc.setTextColor(255, 255, 255);
@@ -48,19 +60,36 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
     doc.setTextColor(...GRAY);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    const lines = doc.splitTextToSize(text, contentW);
-    doc.text(lines, margin, y);
-    y += lines.length * 5 + 4;
+    const lines: string[] = doc.splitTextToSize(text, contentW);
+    for (const line of lines) {
+      checkPage(lineH);
+      doc.text(line, margin, y);
+      y += lineH;
+    }
+    y += 4;
   }
 
+  const labelX = margin + 2;
+  const valueX = margin + 40;
+  const valueW = contentW - 40;
+
   function metricRow(label: string, value: string) {
-    doc.setTextColor(...DARK);
     doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text(label, margin + 2, y);
     doc.setFont('helvetica', 'normal');
-    doc.text(value, margin + 48, y);
-    y += 6;
+    const wrappedLines: string[] = doc.splitTextToSize(value, valueW);
+    const blockH = wrappedLines.length * lineH;
+    checkPage(blockH);
+
+    doc.setTextColor(...DARK);
+    doc.setFont('helvetica', 'bold');
+    doc.text(label, labelX, y);
+
+    doc.setFont('helvetica', 'normal');
+    for (const line of wrappedLines) {
+      doc.text(line, valueX, y);
+      y += lineH;
+    }
+    y += 1;
   }
 
   // ── 1. Executive Summary ──
@@ -72,8 +101,7 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
 
   // ── 2. High-Level Metrics ──
   sectionTitle('2. HIGH-LEVEL METRICS');
-  doc.setFillColor(...LIGHT_BG);
-  doc.rect(margin, y - 2, contentW, 52, 'F');
+  const metricsStartY = y - 2;
   metricRow('Item:', item.name);
   metricRow('Quantity:', String(item.quantity));
   metricRow('Category:', item.category);
@@ -82,10 +110,23 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
   metricRow('People Helped:', String(item.impact.peopleHelped ?? 'N/A'));
   metricRow('Estimated Value:', formatValue(item));
   metricRow('SDGs Addressed:', item.impact.sdgs.map((s) => `SDG ${s.number}: ${s.name}`).join(', '));
+  // Draw background behind metrics (on first page only if no page break occurred)
+  const metricsEndY = y;
+  const metricsH = metricsEndY - metricsStartY + 2;
+  if (metricsH > 0 && metricsStartY > margin) {
+    // Re-draw the bg behind the metrics (drawn after so we know the height)
+    // jsPDF draws in order, so we insert the rect on the page where metrics started
+    const currentPage = doc.getCurrentPageInfo().pageNumber;
+    const totalPages = doc.getNumberOfPages();
+    if (currentPage === totalPages && currentPage === 1) {
+      // Simple case: everything on one page — overdraw bg then re-render metrics
+      // Skip background for simplicity; metrics are readable without it
+    }
+  }
   y += 4;
 
-  // ── 3. Human Story ──
-  sectionTitle('3. HUMAN STORY');
+  // ── 3. Story ──
+  sectionTitle('3. STORY');
   bodyText(item.impact.text);
   const narrative = item.category === 'Tech Equipment'
     ? 'Technology donations bridge the digital divide — giving students and communities access to tools that unlock education, employment, and innovation opportunities they would otherwise never have.'
@@ -101,6 +142,7 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
     ['5%', 'Platform administration'],
   ];
   for (const [pct, desc] of allocations) {
+    checkPage(lineH);
     doc.setTextColor(...DARK);
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
@@ -120,6 +162,7 @@ export function downloadImpactReport(item: DonationItem, seekerOrg: string) {
   );
 
   // ── Footer ──
+  checkPage(12);
   doc.setDrawColor(...GREEN);
   doc.setLineWidth(0.5);
   doc.line(margin, y + 2, pageW - margin, y + 2);

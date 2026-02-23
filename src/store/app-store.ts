@@ -58,28 +58,40 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   getDashboardStats: () => {
     const { items } = get();
-    const totalItems = items.length;
-    const totalClaimed = items.filter((i) => i.claimed).length;
-    const totalAvailable = totalItems - totalClaimed;
-    const totalUrgent = items.filter((i) => i.urgent && !i.claimed).length;
+    const totalDonations = items.length;
+    const totalQuantity = items.reduce((sum, i) => sum + i.quantity, 0);
+    const totalClaimed = items.filter((i) => i.claimed).reduce((sum, i) => sum + i.quantity, 0);
+    const totalAvailable = totalQuantity - totalClaimed;
+    const totalUrgent = items.filter((i) => i.urgent && !i.claimed).reduce((sum, i) => sum + i.quantity, 0);
+    const totalPeopleHelped = items.reduce((sum, i) => sum + (i.impact.peopleHelped ?? 0), 0);
+    const totalEstimatedValue = items.reduce((sum, i) => sum + (i.impact.estimatedValue ?? 0), 0);
 
-    const byCategory = {} as Record<Category, number>;
+    const byCategory = {} as Record<Category, { donations: number; quantity: number }>;
     for (const cat of CATEGORIES) {
-      byCategory[cat] = items.filter((i) => i.category === cat).length;
+      const catItems = items.filter((i) => i.category === cat);
+      byCategory[cat] = {
+        donations: catItems.length,
+        quantity: catItems.reduce((sum, i) => sum + i.quantity, 0),
+      };
     }
 
-    const sdgCounts = new Map<number, number>();
+    const sdgCounts = new Map<number, { count: number; peopleHelped: number }>();
     for (const item of items) {
       for (const sdg of item.impact.sdgs) {
-        sdgCounts.set(sdg.number, (sdgCounts.get(sdg.number) ?? 0) + 1);
+        const prev = sdgCounts.get(sdg.number) ?? { count: 0, peopleHelped: 0 };
+        sdgCounts.set(sdg.number, {
+          count: prev.count + item.quantity,
+          peopleHelped: prev.peopleHelped + (item.impact.peopleHelped ?? 0),
+        });
       }
     }
 
     const bySdg = SDG_GOALS.filter((g) => sdgCounts.has(g.number)).map((goal) => ({
       goal,
-      count: sdgCounts.get(goal.number)!,
+      count: sdgCounts.get(goal.number)!.count,
+      peopleHelped: sdgCounts.get(goal.number)!.peopleHelped,
     }));
 
-    return { totalItems, totalClaimed, totalAvailable, totalUrgent, byCategory, bySdg };
+    return { totalDonations, totalQuantity, totalClaimed, totalAvailable, totalUrgent, totalPeopleHelped, totalEstimatedValue, byCategory, bySdg };
   },
 }));

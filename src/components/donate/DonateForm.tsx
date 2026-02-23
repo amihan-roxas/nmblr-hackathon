@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORIES } from '../../types/index.ts';
 import type { Category, DonateFormData, ImpactStatement } from '../../types/index.ts';
@@ -22,14 +22,54 @@ export default function DonateForm() {
     urgent: false,
   });
 
-  const impact: ImpactStatement | null =
-    form.name.trim() && form.quantity > 0
-      ? generateImpact(form.name.trim(), form.quantity, form.category)
-      : null;
+  const [impact, setImpact] = useState<ImpactStatement | null>(null);
+  const [loadingImpact, setLoadingImpact] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
+
+  const allRequiredFilled =
+    form.name.trim() !== '' &&
+    form.quantity > 0 &&
+    form.donorName.trim() !== '' &&
+    form.photoPreview !== null;
+
+  useEffect(() => {
+    if (!allRequiredFilled) {
+      setImpact(null);
+      return;
+    }
+
+    setLoadingImpact(true);
+
+    // Debounce: wait 600ms after user stops typing
+    const timer = setTimeout(() => {
+      // Cancel any in-flight request
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+
+      generateImpact(form.name.trim(), form.quantity, form.category).then(
+        (result) => {
+          if (!controller.signal.aborted) {
+            setImpact(result);
+            setLoadingImpact(false);
+          }
+        },
+        () => {
+          if (!controller.signal.aborted) {
+            setLoadingImpact(false);
+          }
+        },
+      );
+    }, 600);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [allRequiredFilled, form.name, form.quantity, form.category]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.name.trim() || !form.donorName.trim()) return;
+    if (!form.name.trim() || !form.donorName.trim() || !impact) return;
 
     addItem({
       id: generateId(),
@@ -39,7 +79,7 @@ export default function DonateForm() {
       donorName: form.donorName.trim(),
       photoUrl: form.photoPreview,
       urgent: form.urgent,
-      impact: impact!,
+      impact,
       claimed: false,
       claimedBy: null,
       createdAt: Date.now(),
@@ -121,14 +161,14 @@ export default function DonateForm() {
         <button
           type="submit"
           className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-emerald-700 disabled:opacity-50"
-          disabled={!form.name.trim() || !form.donorName.trim()}
+          disabled={!form.name.trim() || !form.donorName.trim() || !impact || loadingImpact}
         >
           Submit Donation
         </button>
       </form>
 
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <ImpactCard impact={impact} />
+        <ImpactCard impact={impact} loading={loadingImpact} />
       </div>
     </div>
   );
