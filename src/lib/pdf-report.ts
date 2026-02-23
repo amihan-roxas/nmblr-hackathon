@@ -4,7 +4,6 @@ import type { DonationItem } from '../types/index.ts';
 const GREEN = [16, 185, 129] as const; // emerald-500
 const DARK = [17, 24, 39] as const;    // gray-900
 const GRAY = [75, 85, 99] as const;    // gray-600
-const LIGHT_BG = [236, 253, 245] as const; // emerald-50
 
 function formatValue(item: DonationItem): string {
   if (!item.impact.estimatedValue) return 'N/A';

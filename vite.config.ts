@@ -59,7 +59,7 @@ function anthropicProxy(): Plugin {
             return
           }
 
-          const data = await response.json()
+          const data = await response.json() as { content?: { text?: string }[] }
           const text = data.content?.[0]?.text ?? ''
 
           res.setHeader('Content-Type', 'application/json')
